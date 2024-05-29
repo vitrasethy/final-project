@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Product::class)->constrained()->cascadeOnDelete();
             $table->tinyInteger('is_purchased')->default(0);
+            $table->tinyInteger('quantity')->default(1);
             $table->timestamps();
         });
     }

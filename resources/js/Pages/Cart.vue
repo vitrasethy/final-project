@@ -15,15 +15,15 @@ defineProps({
     carts: Array,
 });
 
-onMounted(() => {
-    const productsID = JSON.parse(localStorage.getItem("productID")) || [];
-    if (productsID.length !== 0) {
-        router.post("/carts", {
-            products_id: productsID,
-        });
-    }
-    localStorage.removeItem("productID");
-});
+// onMounted(() => {
+//     const productsID = JSON.parse(localStorage.getItem("productID")) || [];
+//     if (productsID.length !== 0) {
+//         router.post("/carts", {
+//             products_id: productsID,
+//         });
+//     }
+//     localStorage.removeItem("productID");
+// });
 </script>
 
 <template>

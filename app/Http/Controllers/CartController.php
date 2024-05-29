@@ -12,14 +12,10 @@ class CartController extends Controller
 {
     public function index()
     {
-        $carts = Cart::select('*', DB::raw('COUNT(product_id) as quantity'))
-            ->where('user_id', auth()->id())
-            ->groupBy('product_id')
-            ->get();
-
+        $carts = Cart::with('product')->where('user_id', auth()->id())->get();
 
         return Inertia::render('Cart', [
-            'carts' => $carts->load('product'),
+            'carts' => $carts,
         ]);
     }
 
@@ -33,14 +29,19 @@ class CartController extends Controller
             'products_id.*' => 'required|exists:products,id',
         ]);
 
-        $product = collect($validated['products_id'])->map(fn($product_id) => (
-        [
-            'product_id' => $product_id,
-            'user_id' => auth()->id(),
-        ]
-        ));
-
-        Cart::insert($product->toArray());
+        foreach ($validated['products_id'] as $product_id) {
+            $product = Cart::where('product_id', $product_id)->first();
+            if ($product) {
+                $product->update([
+                    'quantity' => ++$product->quantity,
+                ]);
+            } else {
+                Cart::create([
+                    'product_id' => $product_id,
+                    'user_id' => auth()->id(),
+                ]);
+            }
+        }
 
         return to_route('carts.index');
     }

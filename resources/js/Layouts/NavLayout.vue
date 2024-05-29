@@ -1,5 +1,18 @@
 <script setup>
 import { Link } from "@inertiajs/vue3";
+import { router } from "@inertiajs/vue3";
+
+const handleCart = () => {
+    const productsID = JSON.parse(localStorage.getItem("productID")) || [];
+    localStorage.removeItem("productID");
+    if (productsID.length !== 0) {
+        router.post("/carts", {
+            products_id: productsID,
+        });
+    }
+
+    router.get("/carts");
+};
 </script>
 
 <template>
@@ -37,16 +50,17 @@ import { Link } from "@inertiajs/vue3";
                         </Link>
                     </li>
                     <li>
-                        <Link
-                            :href="route('carts.index')"
+                        <button
+                            @click="handleCart"
                             class="block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                             :class="
                                 $page.component === 'Cart'
                                     ? 'text-blue-700'
                                     : 'text-black'
                             "
-                            >Cart
-                        </Link>
+                        >
+                            Cart
+                        </button>
                     </li>
                     <li v-if="!$page.props.auth.user">
                         <a
