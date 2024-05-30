@@ -4,13 +4,11 @@ import { router } from "@inertiajs/vue3";
 
 const handleCart = () => {
     const productsID = JSON.parse(localStorage.getItem("productID")) || [];
-    localStorage.removeItem("productID");
     if (productsID.length !== 0) {
         router.post("/carts", {
             products_id: productsID,
         });
     }
-
     router.get("/carts");
 };
 </script>

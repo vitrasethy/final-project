@@ -7,7 +7,6 @@ export default {
 </script>
 
 <script setup>
-import { router } from "@inertiajs/vue3";
 import { Link } from "@inertiajs/vue3";
 import { onMounted } from "vue";
 
@@ -15,15 +14,9 @@ defineProps({
     carts: Array,
 });
 
-// onMounted(() => {
-//     const productsID = JSON.parse(localStorage.getItem("productID")) || [];
-//     if (productsID.length !== 0) {
-//         router.post("/carts", {
-//             products_id: productsID,
-//         });
-//     }
-//     localStorage.removeItem("productID");
-// });
+onMounted(() => {
+    localStorage.removeItem("productID");
+});
 </script>
 
 <template>
