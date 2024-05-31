@@ -10,6 +10,10 @@ use Inertia\Inertia;
 Route::get('/', [ProductController::class, 'index'])->name('product.index');
 Route::resource('/carts', CartController::class)->only(['index', 'store', 'destroy'])
     ->middleware('auth:web');
+
+Route::post('checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+Route::get('checkout/success', [CartController::class, 'success'])->name('checkout.success');
+
 Route::get('login', function () {
     return Inertia::render('Auth/Login');
 })->name('login');
