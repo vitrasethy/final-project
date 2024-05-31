@@ -29,7 +29,7 @@ class CartController extends Controller
         ]);
 
         foreach ($validated['products_id'] as $product_id) {
-            $product = Cart::where('product_id', $product_id)->first();
+            $product = Cart::where('product_id', $product_id)->where('is_purchased', false)->first();
             if ($product) {
                 $product->update([
                     'quantity' => ++$product->quantity,
@@ -106,10 +106,6 @@ class CartController extends Controller
 
         if ($checkoutSession->payment_status !== 'paid') {
             return;
-        }
-
-        if ($checkoutSession->created < now()->subSeconds(30)->timestamp) {
-            throw new NotFoundHttpException();
         }
 
         $orders = Cart::where('user_id', auth()->id())
