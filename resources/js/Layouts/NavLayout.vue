@@ -8,8 +8,7 @@ const handleCart = () => {
         router.post("/carts", {
             products_id: productsID,
         });
-    }
-    else if(productsID.length === 0 ){
+    } else if (productsID.length === 0) {
         router.get("/carts");
     }
 };
@@ -28,7 +27,7 @@ const handleCart = () => {
                 />
                 <span
                     class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"
-                    >Apple</span
+                >Apple</span
                 >
             </a>
             <div class="hidden w-full md:block md:w-auto">
@@ -46,7 +45,7 @@ const handleCart = () => {
                                     : 'text-black'
                             "
                             aria-current="page"
-                            >Home
+                        >Home
                         </Link>
                     </li>
                     <li>
@@ -61,6 +60,20 @@ const handleCart = () => {
                         >
                             Cart
                         </button>
+                    </li>
+                    <li>
+                        <Link
+                            class="block py-2 px-3 bg-blue-700 rounded md:bg-transparent md:p-0 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent"
+                            :class="
+                                $page.component === 'OrderHistory'
+                                    ? 'text-blue-700'
+                                    : 'text-black'
+                            "
+                            href="/order-history"
+                            as="button"
+                        >
+                            Order History
+                        </Link>
                     </li>
                     <li v-if="!$page.props.auth.user">
                         <a
@@ -90,7 +103,7 @@ const handleCart = () => {
                             as="button"
                             class="block py-2 px-3 text-black bg-blue-700 rounded md:bg-transparent md:p-0 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent"
                             aria-current="page"
-                            >Logout
+                        >Logout
                         </Link>
                     </li>
                 </ul>
