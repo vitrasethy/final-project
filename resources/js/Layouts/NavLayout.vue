@@ -9,7 +9,9 @@ const handleCart = () => {
             products_id: productsID,
         });
     }
-    router.get("/carts");
+    else if(productsID.length === 0 ){
+        router.get("/carts");
+    }
 };
 </script>
 

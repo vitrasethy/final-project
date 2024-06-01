@@ -9,6 +9,7 @@ export default {
 <script setup>
 import { Link } from "@inertiajs/vue3";
 import { onMounted } from "vue";
+import { router } from "@inertiajs/vue3";
 
 defineProps({
     carts: Array,
@@ -17,6 +18,14 @@ defineProps({
 onMounted(() => {
     localStorage.removeItem("productID");
 });
+
+const handleCheckout = (carts) =>{
+    if( carts === 0 ){
+        return;
+    }
+    router.post("/checkout");
+}
+
 </script>
 
 <template>
@@ -74,11 +83,14 @@ onMounted(() => {
                 </tbody>
             </table>
         </div>
-        <button
-            type="button"
-            class="my-10 px-6 py-3.5 text-base font-medium text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-        >
-            Check Out
-        </button>
+        <form @submit.prevent="handleCheckout(carts)">
+            <button
+                type="submit"
+                :disabled="carts.length === 0"
+                :class="[carts.length === 0 ? 'bg-gray-300' : 'bg-blue-700 hover:bg-blue-800', 'my-10 px-6 py-3.5 text-base font-medium text-white rounded-lg text-center']"
+            >
+                Check Out
+            </button>
+        </form>
     </div>
 </template>
